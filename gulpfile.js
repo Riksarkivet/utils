@@ -38,10 +38,10 @@ gulp.task('browserify', function (cb) {
         .pipe(gulp.dest(config.dist));
 });
 
-gulp.task('test', function () {
-    return gulp.src(config.test, {read: false})
-        .pipe(mocha({reporter: 'nyan'}));
-});
+//gulp.task('test', function () {
+//    return gulp.src(config.test, {read: false})
+//        .pipe(mocha({reporter: 'nyan'}));
+//});
 
 gulp.task('clean:dist', function (cb) {
     del([
