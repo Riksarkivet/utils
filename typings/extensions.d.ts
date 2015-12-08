@@ -58,3 +58,8 @@ interface String {
 interface StringConstructor {
     format(template: string, ...args: any[]): string;
 }
+
+interface HTMLElement{
+    mozRequestFullScreen: any;
+    msRequestFullscreen: any;
+}
