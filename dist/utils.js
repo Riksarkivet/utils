@@ -43,7 +43,6 @@ var Utils;
     })();
     Utils.Bools = Bools;
 })(Utils || (Utils = {}));
-/// <reference path="../typings/jquery.d.ts" />
 var Utils;
 (function (Utils) {
     var Clipboard = (function () {
