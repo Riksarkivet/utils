@@ -1,3 +1,4 @@
+/// <reference path="typings/jquery.d.ts" />
 declare module Utils {
     class Async {
         static WaitFor(test: () => boolean, successCallback: () => void, failureCallback?: () => void, interval?: number, maxTries?: number, numTries?: number): void;
@@ -6,6 +7,12 @@ declare module Utils {
 declare module Utils {
     class Bools {
         static GetBool(val: any, defaultVal: boolean): boolean;
+    }
+}
+declare module Utils {
+    class Clipboard {
+        static Copy(elem: HTMLElement): void;
+        static SupportsCopy(): boolean;
     }
 }
 /**
