@@ -10,8 +10,8 @@ declare module Utils {
 }
 declare module Utils {
     class Clipboard {
-        static Copy(elem: HTMLElement): void;
-        static SupportsCopy(): boolean;
+        static Copy(text: string): void;
+        static BrowserSupportsCopy(): boolean;
     }
 }
 /**
