@@ -56,7 +56,7 @@ var Utils;
             $temp.remove();
         };
         Clipboard.BrowserSupportsCopy = function () {
-            return (!(document.queryCommandSupported && document.queryCommandSupported('copy')));
+            return document.queryCommandSupported && document.queryCommandSupported('copy');
         };
         return Clipboard;
     })();

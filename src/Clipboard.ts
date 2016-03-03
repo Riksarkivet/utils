@@ -9,7 +9,7 @@ module Utils {
         }
         
         public static BrowserSupportsCopy(): boolean {
-            return (!(document.queryCommandSupported && document.queryCommandSupported('copy')));
+            return document.queryCommandSupported && document.queryCommandSupported('copy');
         }
         
     }
