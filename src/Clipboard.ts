@@ -8,7 +8,7 @@ module Utils {
             $temp.remove();
         }
         
-        public static BrowserSupportsCopy(): boolean {
+        public static SupportsCopy(): boolean {
             return document.queryCommandSupported && document.queryCommandSupported('copy');
         }
         
