@@ -1,7 +1,7 @@
 module Utils {
     export class Clipboard {
         public static Copy(text: string) {
-            var $tempDiv = $("<div>");
+            var $tempDiv = $("<div style='position:absolute;left:-9999px'>");
             var brRegex = /<br\s*[\/]?>/gi;            
             text = text.replace(brRegex, "\n");
             $("body").append($tempDiv);
