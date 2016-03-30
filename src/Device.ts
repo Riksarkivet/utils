@@ -10,5 +10,9 @@ module Utils{
 
             return dpr / bsr;
         }
+        
+        static isTouch (): boolean {
+            return !!("ontouchstart" in window) || window.navigator.msMaxTouchPoints > 0;
+        }
     }
 }
