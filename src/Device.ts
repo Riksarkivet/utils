@@ -1,6 +1,6 @@
 module Utils{
     export class Device {
-        static GetPixelRatio(ctx: CanvasRenderingContext2D): number {
+        static getPixelRatio(ctx: CanvasRenderingContext2D): number {
             var dpr = window.devicePixelRatio || 1;
             var bsr = ctx.webkitBackingStorePixelRatio ||
                 ctx.mozBackingStorePixelRatio ||

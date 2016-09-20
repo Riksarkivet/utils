@@ -1,6 +1,6 @@
 module Utils {
     export class Clipboard {
-        public static Copy(text: string) {
+        public static copy(text: string) {
             var $tempDiv = $("<div style='position:absolute;left:-9999px'>");
             var brRegex = /<br\s*[\/]?>/gi;            
             text = text.replace(brRegex, "\n");
@@ -13,7 +13,7 @@ module Utils {
             $tempDiv.remove();
         }
         
-        public static SupportsCopy(): boolean {
+        public static supportsCopy(): boolean {
             return document.queryCommandSupported && document.queryCommandSupported('copy');
         }
         

@@ -1,7 +1,7 @@
 module Utils {
 
     export class Async {
-        static WaitFor(test: () => boolean, successCallback: () => void, failureCallback?: () => void, interval?: number, maxTries?: number, numTries?: number) {
+        static waitFor(test: () => boolean, successCallback: () => void, failureCallback?: () => void, interval?: number, maxTries?: number, numTries?: number) {
             if (!interval) interval = 200;
             if (!maxTries) maxTries = 100; // try 100 times over 20 seconds
             if (!numTries) numTries = 0;
@@ -14,7 +14,7 @@ module Utils {
                 successCallback();
             } else {
                 setTimeout(function(){
-                    Async.WaitFor(test, successCallback, failureCallback, interval, maxTries, numTries);
+                    Async.waitFor(test, successCallback, failureCallback, interval, maxTries, numTries);
                 }, interval);
             }
         }
