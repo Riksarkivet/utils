@@ -1,5 +1,7 @@
 .idea
-.vscode
 node_modules
 bower_components
 npm-debug.log
+typings
+examples
+debug.log

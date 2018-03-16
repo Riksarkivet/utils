@@ -1,8 +1,8 @@
-module Utils {
+namespace Utils {
 
     export class Events {
 
-        static debounce(fn: any, debounceDuration: number) {
+        static debounce(fn: any, debounceDuration: number): any {
             // summary:
             //      Returns a debounced function that will make sure the given
             //      function is not triggered too much.
@@ -16,7 +16,7 @@ module Utils {
 
             return function() {
                 if (!fn.debouncing) {
-                    var args = Array.prototype.slice.apply(arguments);
+                    const args: any = Array.prototype.slice.apply(arguments);
                     fn.lastReturnVal = fn.apply(window, args);
                     fn.debouncing = true;
                 }

@@ -1,7 +1,7 @@
-module Utils {
+namespace Utils {
 
     export class Async {
-        static waitFor(test: () => boolean, successCallback: () => void, failureCallback?: () => void, interval?: number, maxTries?: number, numTries?: number) {
+        static waitFor(test: () => boolean, successCallback: () => void, failureCallback?: () => void, interval?: number, maxTries?: number, numTries?: number): void {
             if (!interval) interval = 200;
             if (!maxTries) maxTries = 100; // try 100 times over 20 seconds
             if (!numTries) numTries = 0;

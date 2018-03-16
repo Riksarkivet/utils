@@ -1,4 +1,4 @@
-module Utils{
+namespace Utils{
     export class Device {
         static getPixelRatio(ctx: CanvasRenderingContext2D): number {
             var dpr = window.devicePixelRatio || 1;

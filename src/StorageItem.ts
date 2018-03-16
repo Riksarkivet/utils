@@ -1,4 +1,4 @@
-module Utils {
+namespace Utils {
     export class StorageItem {
         public key:string;
         public value:any;

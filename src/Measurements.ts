@@ -1,4 +1,4 @@
-module Utils.Measurements {
+namespace Utils.Measurements {
 
     export class Size{
         constructor (public width: number, public height: number){}
@@ -6,10 +6,12 @@ module Utils.Measurements {
 
     export class Dimensions {
         static fitRect(width1: number, height1: number, width2: number, height2: number): Size {
-            var ratio1 = height1 / width1;
-            var ratio2 = height2 / width2;
+            const ratio1: number = height1 / width1;
+            const ratio2: number = height2 / width2;
 
-            var width, height, scale;
+            let width: number = 0;
+            let height: number = 0;
+            let scale: number;
 
             if (ratio1 < ratio2) {
                 scale = width2 / width1;

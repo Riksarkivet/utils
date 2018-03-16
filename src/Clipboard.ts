@@ -1,8 +1,8 @@
-module Utils {
+namespace Utils {
     export class Clipboard {
         public static copy(text: string) {
-            var $tempDiv = $("<div style='position:absolute;left:-9999px'>");
-            var brRegex = /<br\s*[\/]?>/gi;            
+            const $tempDiv: JQuery = $("<div style='position:absolute;left:-9999px'>");
+            const brRegex: RegExp = /<br\s*[\/]?>/gi;            
             text = text.replace(brRegex, "\n");
             $("body").append($tempDiv);
             $tempDiv.append(text);

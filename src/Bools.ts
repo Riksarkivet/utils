@@ -1,4 +1,4 @@
-module Utils {
+namespace Utils {
 
     export class Bools {
         static getBool(val: any, defaultVal: boolean): boolean {

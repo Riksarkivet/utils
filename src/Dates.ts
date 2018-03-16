@@ -1,4 +1,4 @@
-module Utils {
+namespace Utils {
 
     export class Dates {
         static getTimeStamp(): number {

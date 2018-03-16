@@ -1,4 +1,4 @@
-module Utils {
+namespace Utils {
 
     export class Numbers {
         static numericalInput(event: any): boolean {

@@ -1,0 +1,1 @@
+(<any>global).Utils = module.exports = Utils;

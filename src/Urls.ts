@@ -1,25 +1,23 @@
-module Utils {
+namespace Utils {
 
     export class Urls {
 
-        static getHashParameter(key: string, doc?: Document): string {
+        static getHashParameter(key: string, doc?: Document): string | null {
             if (!doc) doc = window.document;
-            var regex = new RegExp("#.*[?&]" + key + "=([^&]+)(&|$)");
-            var match = regex.exec(doc.location.hash);
+            const regex: RegExp = new RegExp("#.*[?&]" + key + "=([^&]+)(&|$)");
+            const match: RegExpExecArray | null = regex.exec(doc.location.hash);
             return(match ? decodeURIComponent(match[1].replace(/\+/g, " ")) : null);
         }
 
-        static setHashParameter(key: string, value: any, doc?: Document): void{
+        static setHashParameter(key: string, value: string, doc?: Document): void {
             if (!doc) doc = window.document;
 
-            var kvp = this.updateURIKeyValuePair(doc.location.hash.replace('#?', ''), key, value);
-
-            var newHash = "#?" + kvp;
-
-            var url = doc.URL;
+            const kvp: string = this.updateURIKeyValuePair(doc.location.hash.replace('#?', ''), key, value);
+            const newHash: string = "#?" + kvp;
+            let url: string = doc.URL;
 
             // remove hash value (if present).
-            var index = url.indexOf('#');
+            const index: number = url.indexOf('#');
 
             if (index != -1) {
                 url = url.substr(0, url.indexOf('#'));
@@ -58,22 +56,22 @@ module Utils {
                 window.top.history.replaceState(null, null, startUrl + searchvalue + value + endUrl);
         }
 
-        static getQuerystringParameter(key: string, w?: Window): string {
+        static getQuerystringParameter(key: string, w?: Window): string | null {
             if (!w) w = window;
             return this.getQuerystringParameterFromString(key, w.location.search);
         }
 
-        static getQuerystringParameterFromString(key: string, querystring: string): string {
+        static getQuerystringParameterFromString(key: string, querystring: string): string | null {
             key = key.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
-            var regex = new RegExp("[\\?&]" + key + "=([^&#]*)");
-            var match = regex.exec(querystring);
+            const regex: RegExp = new RegExp("[\\?&]" + key + "=([^&#]*)");
+            const match: RegExpExecArray | null = regex.exec(querystring);
             return(match ? decodeURIComponent(match[1].replace(/\+/g, " ")) : null);
         }
 
-        static setQuerystringParameter(key: string, value: any, doc?: Document): void{
+        static setQuerystringParameter(key: string, value: any, doc?: Document): void {
             if (!doc) doc = window.document;
 
-            var kvp = this.updateURIKeyValuePair(doc.location.hash.replace('#?', ''), key, value);
+            const kvp: string = this.updateURIKeyValuePair(doc.location.hash.replace('#?', ''), key, value);
 
             // redirects.
             window.location.search = kvp;
@@ -84,14 +82,14 @@ module Utils {
             key = encodeURIComponent(key);
             value = encodeURIComponent(value);
 
-            var kvp = uriSegment.split('&');
+            const kvp: string[] = uriSegment.split('&');
 
             // Array.split() returns an array with a single "" item
             // if the target string is empty. remove if present.
             if (kvp[0] == "") kvp.shift();
 
-            var i = kvp.length;
-            var x;
+            let i: number = kvp.length;
+            let x: string[];
 
             // replace if already present.
             while (i--) {
@@ -112,15 +110,15 @@ module Utils {
             return kvp.join('&');
         }
 
-        static getUrlParts(url: string): any {
-            var a = document.createElement('a');
+        static getUrlParts(url: string): HTMLAnchorElement {
+            const a: HTMLAnchorElement = document.createElement('a');
             a.href = url;
             return a;
         }
 
         static convertToRelativeUrl(url: string): string {
-            var parts = this.getUrlParts(url);
-            var relUri = parts.pathname + parts.searchWithin;
+            const parts: HTMLAnchorElement = this.getUrlParts(url);
+            let relUri: string = parts.pathname + (<any>parts).searchWithin;
 
             if (!relUri.startsWith("/")) {
                 relUri = "/" + relUri;

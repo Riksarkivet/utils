@@ -1,7 +1,7 @@
-module Utils {
+namespace Utils {
 
     export class Files {
-        static simplifyMimeType(mime: string) {
+        static simplifyMimeType(mime: string): string {
             switch (mime) {
                 case 'text/plain':
                     return 'txt';
@@ -12,7 +12,7 @@ module Utils {
                 case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
                     return 'docx';
                 default:
-                    var parts = mime.split('/');
+                    const parts: string[] = mime.split('/');
                     return parts[parts.length - 1];
             }
         }

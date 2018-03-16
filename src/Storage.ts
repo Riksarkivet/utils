@@ -1,9 +1,9 @@
-module Utils {
+namespace Utils {
 
     export class Storage {
         private static _memoryStorage:any = {};
 
-        public static clear(storageType:StorageType = StorageType.memory):void {
+        public static clear(storageType: StorageType = StorageType.memory): void {
             switch (storageType.value) {
                 case StorageType.memory.value:
                     this._memoryStorage = {};
@@ -17,10 +17,10 @@ module Utils {
             }
         }
 
-        public static clearExpired(storageType:StorageType = StorageType.memory):void {
-            var items = this.getItems(storageType);
+        public static clearExpired(storageType: StorageType = StorageType.memory): void {
+            const items: StorageItem[] = this.getItems(storageType);
 
-            for (var i = 0; i < items.length; i++) {
+            for (let i = 0; i < items.length; i++) {
                 var item = items[i];
 
                 if (this._isExpired(item)) {
@@ -29,9 +29,9 @@ module Utils {
             }
         }
 
-        public static get(key:string, storageType:StorageType = StorageType.memory):StorageItem {
+        public static get(key: string, storageType: StorageType = StorageType.memory): StorageItem | null {
 
-            var data:string;
+            let data: string | null = null;
 
             switch (storageType.value) {
                 case StorageType.memory.value:
@@ -47,8 +47,16 @@ module Utils {
 
             if (!data) return null;
 
-            var item:StorageItem = JSON.parse(data);
+            let item: StorageItem | null = null;
 
+            try {
+                item = JSON.parse(data);
+            } catch (error) {
+                return null;
+            }
+
+            if (!item) return null;
+            
             if (this._isExpired(item)) return null;
 
             // useful reference
@@ -57,7 +65,7 @@ module Utils {
             return item;
         }
 
-        private static _isExpired(item:StorageItem):boolean {
+        private static _isExpired(item: StorageItem): boolean {
             if (new Date().getTime() < item.expiresAt) {
                 return false;
             }
@@ -65,16 +73,16 @@ module Utils {
             return true;
         }
 
-        public static getItems(storageType:StorageType = StorageType.memory):StorageItem[] {
+        public static getItems(storageType: StorageType = StorageType.memory): StorageItem[] {
 
-            var items:StorageItem[] = [];
+            const items: StorageItem[] = [];
 
             switch (storageType.value) {
                 case StorageType.memory.value:
-                    var keys = Object.keys(this._memoryStorage);
+                    const keys: string[] = Object.keys(this._memoryStorage);
 
-                    for (var i = 0; i < keys.length; i++) {
-                        var item:StorageItem = this.get(keys[i], StorageType.memory);
+                    for (let i = 0; i < keys.length; i++) {
+                        const item: StorageItem | null = this.get(keys[i], StorageType.memory);
 
                         if (item) {
                             items.push(item);
@@ -83,24 +91,28 @@ module Utils {
 
                     break;
                 case StorageType.session.value:
-                    for (var i = 0; i < sessionStorage.length; i++) {
-                        var key = sessionStorage.key(i);
+                    for (let i = 0; i < sessionStorage.length; i++) {
+                        const key: string | null = sessionStorage.key(i);
 
-                        var item:StorageItem = this.get(key, StorageType.session);
+                        if (key) {
+                            const item: StorageItem | null = this.get(key, StorageType.session);
 
-                        if (item) {
-                            items.push(item);
+                            if (item) {
+                                items.push(item);
+                            }
                         }
                     }
                     break;
                 case StorageType.local.value:
-                    for (var i = 0; i < localStorage.length; i++) {
-                        var key = localStorage.key(i);
+                    for (let i = 0; i < localStorage.length; i++) {
+                        const key: string | null = localStorage.key(i);
 
-                        var item:StorageItem = this.get(key, StorageType.local);
+                        if (key) {
+                            const item: StorageItem | null = this.get(key, StorageType.local);
 
-                        if (item) {
-                            items.push(item);
+                            if (item) {
+                                items.push(item);
+                            }
                         }
                     }
                     break;
@@ -109,7 +121,7 @@ module Utils {
             return items;
         }
 
-        public static remove(key:string, storageType:StorageType = StorageType.memory) {
+        public static remove(key: string, storageType: StorageType = StorageType.memory) {
 
             switch (storageType.value) {
                 case StorageType.memory.value:
@@ -124,10 +136,10 @@ module Utils {
             }
         }
 
-        public static set(key:string, value:any, expirationSecs:number, storageType:StorageType = StorageType.memory):StorageItem {
-            var expirationMS = expirationSecs * 1000;
+        public static set(key: string, value: any, expirationSecs: number, storageType: StorageType = StorageType.memory): StorageItem {
+            const expirationMS: number = expirationSecs * 1000;
 
-            var record = new StorageItem();
+            const record: StorageItem = new StorageItem();
             record.value = value;
             record.expiresAt = new Date().getTime() + expirationMS;
 
