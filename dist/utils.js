@@ -1,3 +1,9 @@
+// utils v0.0.37 https://github.com/edsilv/utils
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var Utils;
 (function (Utils) {
     var Async = (function () {
@@ -25,7 +31,7 @@ var Utils;
             }
         };
         return Async;
-    })();
+    }());
     Utils.Async = Async;
 })(Utils || (Utils = {}));
 var Utils;
@@ -40,7 +46,7 @@ var Utils;
             return val;
         };
         return Bools;
-    })();
+    }());
     Utils.Bools = Bools;
 })(Utils || (Utils = {}));
 var Utils;
@@ -48,23 +54,45 @@ var Utils;
     var Clipboard = (function () {
         function Clipboard() {
         }
-        Clipboard.copy = function (text) {
-            var $tempDiv = $("<div style='position:absolute;left:-9999px'>");
-            var brRegex = /<br\s*[\/]?>/gi;
-            text = text.replace(brRegex, "\n");
-            $("body").append($tempDiv);
-            $tempDiv.append(text);
-            var $tempInput = $("<textarea>");
-            $tempDiv.append($tempInput);
-            $tempInput.val($tempDiv.text()).select();
-            document.execCommand("copy");
-            $tempDiv.remove();
-        };
         Clipboard.supportsCopy = function () {
             return document.queryCommandSupported && document.queryCommandSupported('copy');
         };
+        Clipboard.copy = function (text) {
+            text = Clipboard.convertBrToNewLine(text);
+            var textArea = document.createElement("textarea");
+            textArea.value = text;
+            Clipboard.hideButKeepEnabled(textArea);
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+        };
+        Clipboard.hideButKeepEnabled = function (textArea) {
+            // Place in top-left corner of screen regardless of scroll position.
+            textArea.style.position = 'fixed';
+            textArea.style.top = '0';
+            textArea.style.left = '0';
+            // Ensure it has a small width and height. Setting to 1px / 1em
+            // doesn't work as this gives a negative w/h on some browsers.
+            textArea.style.width = '2em';
+            textArea.style.height = '2em';
+            // We don't need padding, reducing the size if it does flash render.
+            textArea.style.padding = '0';
+            // Clean up any borders.
+            textArea.style.border = 'none';
+            textArea.style.outline = 'none';
+            textArea.style.boxShadow = 'none';
+            // Avoid flash of white box if rendered for any reason.
+            textArea.style.background = 'transparent';
+        };
+        Clipboard.convertBrToNewLine = function (text) {
+            var brRegex = /<br\s*[\/]?>/gi;
+            text = text.replace(brRegex, "\n");
+            return text;
+        };
         return Clipboard;
-    })();
+    }());
     Utils.Clipboard = Clipboard;
 })(Utils || (Utils = {}));
 // Copyright 2013 Basarat Ali Syed. All Rights Reserved.
@@ -72,11 +100,6 @@ var Utils;
 // Licensed under MIT open source license http://opensource.org/licenses/MIT
 //
 // Orginal javascript code was by Mauricio Santos
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
 /**
  * @namespace Top level namespace for collections, a TypeScript data structure library.
  */
@@ -763,7 +786,7 @@ var Utils;
                 };
             };
             return LinkedList;
-        })();
+        }());
         Collections.LinkedList = LinkedList; // End of linked list 
         var Dictionary = (function () {
             /**
@@ -936,7 +959,7 @@ var Utils;
                 return toret + "\n}";
             };
             return Dictionary;
-        })();
+        }());
         Collections.Dictionary = Dictionary; // End of dictionary
         /**
          * This class is used by the LinkedDictionary Internally
@@ -953,7 +976,7 @@ var Utils;
                 this.next.prev = this.prev;
             };
             return LinkedDictionaryPair;
-        })();
+        }());
         var LinkedDictionary = (function (_super) {
             __extends(LinkedDictionary, _super);
             function LinkedDictionary(toStrFunction) {
@@ -1126,7 +1149,7 @@ var Utils;
                 }
             };
             return LinkedDictionary;
-        })(Dictionary);
+        }(Dictionary));
         Collections.LinkedDictionary = LinkedDictionary; // End of LinkedDictionary
         // /**
         //  * Returns true if this dictionary is equal to the given dictionary.
@@ -1306,7 +1329,7 @@ var Utils;
                 return this.dict.isEmpty();
             };
             return MultiDictionary;
-        })();
+        }());
         Collections.MultiDictionary = MultiDictionary; // end of multi dictionary 
         var Heap = (function () {
             /**
@@ -1528,7 +1551,7 @@ var Utils;
                 collections.arrays.forEach(this.data, callback);
             };
             return Heap;
-        })();
+        }());
         Collections.Heap = Heap;
         var Stack = (function () {
             /**
@@ -1627,7 +1650,7 @@ var Utils;
                 this.list.forEach(callback);
             };
             return Stack;
-        })();
+        }());
         Collections.Stack = Stack; // End of stack 
         var Queue = (function () {
             /**
@@ -1731,7 +1754,7 @@ var Utils;
                 this.list.forEach(callback);
             };
             return Queue;
-        })();
+        }());
         Collections.Queue = Queue; // End of queue
         var PriorityQueue = (function () {
             /**
@@ -1838,7 +1861,7 @@ var Utils;
                 this.heap.forEach(callback);
             };
             return PriorityQueue;
-        })();
+        }());
         Collections.PriorityQueue = PriorityQueue; // end of priority queue
         var Set = (function () {
             /**
@@ -2001,7 +2024,7 @@ var Utils;
                 return collections.arrays.toString(this.toArray());
             };
             return Set;
-        })();
+        }());
         Collections.Set = Set; // end of Set
         var Bag = (function () {
             /**
@@ -2181,7 +2204,7 @@ var Utils;
                 this.dictionary.clear();
             };
             return Bag;
-        })();
+        }());
         Collections.Bag = Bag; // End of bag 
         var BSTree = (function () {
             /**
@@ -2576,7 +2599,7 @@ var Utils;
                 };
             };
             return BSTree;
-        })();
+        }());
         Collections.BSTree = BSTree; // end of BSTree
     })(Collections = Utils.Collections || (Utils.Collections = {}));
 })(Utils || (Utils = {})); // End of module 
@@ -2611,7 +2634,7 @@ var Utils;
             }
         };
         return Colors;
-    })();
+    }());
     Utils.Colors = Colors;
 })(Utils || (Utils = {}));
 var Utils;
@@ -2623,7 +2646,7 @@ var Utils;
             return new Date().getTime();
         };
         return Dates;
-    })();
+    }());
     Utils.Dates = Dates;
 })(Utils || (Utils = {}));
 var Utils;
@@ -2644,7 +2667,7 @@ var Utils;
             return !!("ontouchstart" in window) || window.navigator.msMaxTouchPoints > 0;
         };
         return Device;
-    })();
+    }());
     Utils.Device = Device;
 })(Utils || (Utils = {}));
 var Utils;
@@ -2687,7 +2710,7 @@ var Utils;
             return null;
         };
         return Documents;
-    })();
+    }());
     Utils.Documents = Documents;
 })(Utils || (Utils = {}));
 var Utils;
@@ -2719,7 +2742,7 @@ var Utils;
             };
         };
         return Events;
-    })();
+    }());
     Utils.Events = Events;
 })(Utils || (Utils = {}));
 var Utils;
@@ -2743,7 +2766,7 @@ var Utils;
             }
         };
         return Files;
-    })();
+    }());
     Utils.Files = Files;
 })(Utils || (Utils = {}));
 var Utils;
@@ -2756,7 +2779,7 @@ var Utils;
             return charCode;
         };
         return Keyboard;
-    })();
+    }());
     Utils.Keyboard = Keyboard;
 })(Utils || (Utils = {}));
 var Utils;
@@ -2858,7 +2881,7 @@ var Utils;
                 return new Vector(Math.cos(angle), Math.sin(angle));
             };
             return Vector;
-        })();
+        }());
         Maths.Vector = Vector;
     })(Maths = Utils.Maths || (Utils.Maths = {}));
 })(Utils || (Utils = {}));
@@ -2872,7 +2895,7 @@ var Utils;
                 this.height = height;
             }
             return Size;
-        })();
+        }());
         Measurements.Size = Size;
         var Dimensions = (function () {
             function Dimensions() {
@@ -2900,7 +2923,7 @@ var Utils;
                 return false;
             };
             return Dimensions;
-        })();
+        }());
         Measurements.Dimensions = Dimensions;
     })(Measurements = Utils.Measurements || (Utils.Measurements = {}));
 })(Utils || (Utils = {}));
@@ -2929,7 +2952,7 @@ var Utils;
             }
         };
         return Numbers;
-    })();
+    }());
     Utils.Numbers = Numbers;
 })(Utils || (Utils = {}));
 var Utils;
@@ -3059,7 +3082,7 @@ var Utils;
         };
         Storage._memoryStorage = {};
         return Storage;
-    })();
+    }());
     Utils.Storage = Storage;
 })(Utils || (Utils = {}));
 var Utils;
@@ -3068,7 +3091,7 @@ var Utils;
         function StorageItem() {
         }
         return StorageItem;
-    })();
+    }());
     Utils.StorageItem = StorageItem;
 })(Utils || (Utils = {}));
 var Utils;
@@ -3084,7 +3107,7 @@ var Utils;
         StorageType.session = new StorageType("session");
         StorageType.local = new StorageType("local");
         return StorageType;
-    })();
+    }());
     Utils.StorageType = StorageType;
 })(Utils || (Utils = {}));
 var Utils;
@@ -3108,7 +3131,7 @@ var Utils;
             return div.firstChild.nodeValue;
         };
         return Strings;
-    })();
+    }());
     Utils.Strings = Strings;
 })(Utils || (Utils = {}));
 var Utils;
@@ -3193,6 +3216,6 @@ var Utils;
             return relUri;
         };
         return Urls;
-    })();
+    }());
     Utils.Urls = Urls;
 })(Utils || (Utils = {}));

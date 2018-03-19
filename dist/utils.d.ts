@@ -10,8 +10,10 @@ declare module Utils {
 }
 declare module Utils {
     class Clipboard {
-        static copy(text: string): void;
         static supportsCopy(): boolean;
+        static copy(text: string): void;
+        private static hideButKeepEnabled(textArea);
+        private static convertBrToNewLine(text);
     }
 }
 /**
