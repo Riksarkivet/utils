@@ -27,8 +27,10 @@ declare namespace Utils {
 
 declare namespace Utils {
     class Clipboard {
-        static copy(text: string): void;
         static supportsCopy(): boolean;
+        static copy(text: string): void;
+        private static hideButKeepEnabled(textArea);
+        private static convertBrToNewLine(text);
     }
 }
 
@@ -162,6 +164,7 @@ declare namespace Utils {
     class Urls {
         static getHashParameter(key: string, doc?: Document): string | null;
         static setHashParameter(key: string, value: string, doc?: Document): void;
+        static setUrlAfter(searchvalue: string, value: string, doc?: Document): void;
         static getQuerystringParameter(key: string, w?: Window): string | null;
         static getQuerystringParameterFromString(key: string, querystring: string): string | null;
         static setQuerystringParameter(key: string, value: any, doc?: Document): void;
